@@ -1,5 +1,5 @@
 const booksContainer = document.querySelector('.books');
-const booksArray = [
+let booksArray = [
   {
     id: 1,
     title: 'Title1',
@@ -10,7 +10,7 @@ const booksArray = [
 ];
 
 // Display Books
-function displayBooks(){
+function displayBooks() {
   let itemContent = '';
   booksArray.forEach((book) => {
     itemContent += `
@@ -18,7 +18,7 @@ function displayBooks(){
       <div>
         <h3>${book.title}</h3>
         <h4>${book.author}</h4>
-        <button type="button" id="${book.id}">Remove</button>
+        <button type="button" id="${book.id}" class="remove-btn">Remove</button>
       </div>
       <hr>
     </li>`;
@@ -32,13 +32,12 @@ const titleInput = document.querySelector('#titleInput');
 const authorInput = document.querySelector('#authorInput');
 const addBtn = document.querySelector('#addBtn');
 
-
 //Add Book
-function addBooks(title, author){
-  const bookItem ={
-    id: Math.floor(Math.random()*1000),
+function addBooks(title, author) {
+  const bookItem = {
+    id: Math.floor(Math.random() * 1000),
     title: title.value,
-    author: author.value
+    author: author.value,
   };
 
   booksArray.push(bookItem);
@@ -50,4 +49,16 @@ addBtn.addEventListener('click', (e) => {
   addBooks(titleInput, authorInput);
 });
 
+// Remove Book
+const deleteBtns = document.querySelectorAll('.remove-btn');
 
+function removeBook(id) {
+  booksArray = booksArray.filter((book) => book.id.toString() !== id);
+  displayBooks();
+}
+
+deleteBtns.forEach((deleteBtn) => {
+  deleteBtn.addEventListener('click', (e) => {
+    removeBook(e.target.id);
+  });
+});
