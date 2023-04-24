@@ -50,15 +50,18 @@ addBtn.addEventListener('click', (e) => {
 });
 
 // Remove Book
-const deleteBtns = document.querySelectorAll('.remove-btn');
+const deleteButtons = document.querySelectorAll('.remove-btn');
 
 function removeBook(id) {
   booksArray = booksArray.filter((book) => book.id.toString() !== id);
-  displayBooks();
 }
 
-deleteBtns.forEach((deleteBtn) => {
+deleteButtons.forEach((deleteBtn) => {
   deleteBtn.addEventListener('click', (e) => {
     removeBook(e.target.id);
+
+    const div = deleteBtn.parentElement;
+    const li = div.parentElement;
+    li.remove();
   });
 });
