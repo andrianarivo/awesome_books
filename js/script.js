@@ -1,3 +1,4 @@
+const booksContainer = document.querySelector('.books');
 const booksArray = [
   {
     id: 1,
@@ -8,22 +9,16 @@ const booksArray = [
   { id: 3, title: 'Title3', author: 'Author3' },
 ];
 
-/*let createBook = (book) => `<li class="w-50 mx-auto">
-          <div>
-            <h3>${book.title}</h3>
-            <h4>${book.author}</h4>
-            <button type="button" id="${book.id}">Remove</button>
-          </div>
-          <hr>
-        </li>`;*/
-
-const booksContainer = document.querySelector('.books');
-
-const createBooks = () => {
-  /*for (let i = 0; i < booksArray.length; i += 1) {
-    const book = createBook(booksArray[i]);
-    booksContainer.appendChild(book);
-  }*/
-};
-
-createBook();
+let itemContent = '';
+booksArray.forEach((book) => {
+  itemContent += `
+  <li class="w-50 mx-auto">
+    <div>
+      <h3>${book.title}</h3>
+      <h4>${book.author}</h4>
+      <button type="button" id="${book.id}">Remove</button>
+    </div>
+    <hr>
+  </li>`;
+});
+booksContainer.innerHTML = itemContent;
