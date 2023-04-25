@@ -3,30 +3,37 @@ const authorInput = document.querySelector('#authorInput');
 const addBtn = document.querySelector('#addBtn');
 const booksContainer = document.querySelector('.books');
 
-
-
 class BookStore {
   constructor() {
     this.booksArray = [];
   }
+
   // Get data from localstorage
   getData() {
     this.booksArray = JSON.parse(localStorage.getItem('books')) || [];
   }
+
   // Add book to booksArray
-  addBook(book) {
-    this.booksArray.push(book);
+  addBook(title, author) {
+    this.booksArray.push({
+      id: Math.floor(Math.random() * 1000),
+      title,
+      author,
+    });
   }
+
   // Remove book from booksArray
   remove(id) {
     this.booksArray = this.booksArray.filter(
-      (bookItem) => Number(bookItem.id) !== Number(id)
+      (bookItem) => Number(bookItem.id) !== Number(id),
     );
   }
+
   // Set data to localstorage
   saveData() {
     localStorage.setItem('books', JSON.stringify(this.booksArray));
   }
+
   // Show books in DOM
   render() {
     let content = '';
@@ -39,6 +46,7 @@ class BookStore {
     });
     return content;
   }
+
   // Check if empty
   empty() {
     return this.booksArray.length === 0;
@@ -61,15 +69,16 @@ addBtn.addEventListener('click', (e) => {
     titleInput.className = 'border border-2 border-danger';
     authorInput.className = 'border border-2 border-danger';
     return;
-  } else if (authorValue === '') {
+  }
+  if (authorValue === '') {
     authorInput.className = 'border border-2 border-danger';
     return;
-  } else if (titleValue === '') {
+  }
+  if (titleValue === '') {
     titleInput.className = 'border border-2 border-danger';
     return;
   }
-  const book = new Book(titleInput.value, authorInput.value);
-  bookStore.addBook(book);
+  bookStore.addBook(titleInput.value, authorInput.value);
   bookStore.saveData();
   booksContainer.innerHTML = bookStore.render();
   booksContainer.classList.add('border');
