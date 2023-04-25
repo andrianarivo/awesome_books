@@ -25,7 +25,7 @@ class BookStore {
   }
   // Remove book from booksArray
   remove(id) {
-    booksArray = booksArray.filter(
+    this.booksArray = this.booksArray.filter(
       (bookItem) => Number(bookItem.id) !== Number(id)
     );
   }
@@ -38,8 +38,8 @@ class BookStore {
     let content = '';
     this.booksArray.forEach((book) => {
       content += `
-    <li class="w-50 mx-auto">
-      <div>
+    <li class="w-50 mx-auto border">
+      <div class="d-flex">
         <h3>${book.title}</h3>
         <h4>${book.author}</h4>
         <button type="button" id="${book.id}" class="remove-btn">Remove</button>
@@ -53,9 +53,10 @@ class BookStore {
 
 const bookStore = new BookStore();
 bookStore.getData();
+booksContainer.innerHTML = bookStore.render();
 
 addBtn.addEventListener('click', (e) => {
-  // e.preventDefault();
+  e.preventDefault();
   const book = new Book(titleInput.value, authorInput.value);
   bookStore.addBook(book);
   bookStore.saveData();
@@ -65,5 +66,7 @@ addBtn.addEventListener('click', (e) => {
 document.addEventListener('click', (e) => {
   if (e.target.classList.contains('remove-btn')) {
     bookStore.remove(e.target.id);
+    bookStore.saveData();
+    booksContainer.innerHTML = bookStore.render();
   }
 });
