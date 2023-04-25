@@ -38,13 +38,9 @@ class BookStore {
     let content = '';
     this.booksArray.forEach((book) => {
       content += `
-    <li class="w-50 mx-auto border">
-      <div class="d-flex">
-        <h3>${book.title}</h3>
-        <h4>${book.author}</h4>
-        <button type="button" id="${book.id}" class="remove-btn">Remove</button>
-      </div>
-      <hr>
+    <li class="w-100 mx-auto list-group-item list-group-item-secondary d-flex justify-content-between align-items-center">
+        <h5>"${book.title}" by ${book.author}</h5>
+        <button type="button" id="${book.id}" class="remove-btn border border-dark border-3 bg-danger text-light rounded">Remove</button>
     </li>`;
     });
     return content;
