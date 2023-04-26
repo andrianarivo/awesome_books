@@ -25,7 +25,7 @@ class BookStore {
   // Remove book from booksArray
   remove(id) {
     this.booksArray = this.booksArray.filter(
-      (bookItem) => Number(bookItem.id) !== Number(id),
+      (bookItem) => Number(bookItem.id) !== Number(id)
     );
   }
 
