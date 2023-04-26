@@ -1,6 +1,6 @@
 // const titleInput = document.querySelector('#titleInput');
 // const authorInput = document.querySelector('#authorInput');
-// const addBtn = document.querySelector('#addBtn');
+let addBtn;
 const mainContainer = document.querySelector('main');
 const navLinks = document.querySelectorAll('.nav-link');
 let booksContainer = '';
@@ -71,36 +71,63 @@ navLinks.forEach((navLink) => {
         booksContainer = document.querySelector('.books');
         booksContainer.innerHTML = bookStore.render();
         break;
+      case 'add-new':
+        mainContainer.innerHTML = `
+        <h2 class='text-center'>Add a new book</h2>
+        <form action='' class='d-flex flex-column w-50 mx-auto gap-4 mt-4'>
+          <input
+            type='text'
+            class='form-control'
+            id='titleInput'
+            placeholder='Title'
+            required
+          />
+          <input
+            type='text'
+            class='form-control'
+            id='authorInput'
+            placeholder='Author'
+            required
+          />
+          <button
+            type='submit'
+            id='addBtn'
+            class='btn btn-primary w-25 align-self-end'>
+            Add
+          </button>
+        </form>
+        `;
+        // ADD A NEW BOOK
+        addBtn = document.querySelector('#addBtn');
+        addBtn.addEventListener('click', (e) => {
+          e.preventDefault();
+          let titleValue = titleInput.value;
+          let authorValue = authorInput.value;
+          titleInput.className = '';
+          authorInput.className = '';
+
+          if (titleValue === '' && authorValue === '') {
+            titleInput.className = 'border border-2 border-danger';
+            authorInput.className = 'border border-2 border-danger';
+            return;
+          }
+          if (authorValue === '') {
+            authorInput.className = 'border border-2 border-danger';
+            return;
+          }
+          if (titleValue === '') {
+            titleInput.className = 'border border-2 border-danger';
+            return;
+          }
+          bookStore.addBook(titleInput.value, authorInput.value);
+          bookStore.saveData();
+          titleInput.value = '';
+          authorInput.value = '';
+        });
+        break;
     }
   });
 });
-
-// ADD A NEW BOOK
-// addBtn.addEventListener('click', (e) => {
-//   e.preventDefault();
-//   const titleValue = titleInput.value;
-//   const authorValue = authorInput.value;
-//   titleInput.className = '';
-//   authorInput.className = '';
-
-//   if (titleValue === '' && authorValue === '') {
-//     titleInput.className = 'border border-2 border-danger';
-//     authorInput.className = 'border border-2 border-danger';
-//     return;
-//   }
-//   if (authorValue === '') {
-//     authorInput.className = 'border border-2 border-danger';
-//     return;
-//   }
-//   if (titleValue === '') {
-//     titleInput.className = 'border border-2 border-danger';
-//     return;
-//   }
-//   bookStore.addBook(titleInput.value, authorInput.value);
-//   bookStore.saveData();
-//   booksContainer.innerHTML = bookStore.render();
-//   booksContainer.classList.add('border');
-// });
 
 // REMOVE A BOOK
 // document.addEventListener('click', (e) => {
@@ -114,28 +141,4 @@ navLinks.forEach((navLink) => {
 //   }
 // });
 /*<!-- Book Collection -->
-    <!-- <ul
-      class="books w-50 mx-auto list-unstyled my-5 list-group border-3 border-dark"></ul>
-    <hr class="w-25 mx-auto" />
-    <h2 class="text-center">Add a new book</h2> -->
-    <!-- Form -->
-    <!-- <form action="" class="d-flex flex-column w-50 mx-auto gap-4">
-      <input
-        type="text"
-        class="form-control"
-        id="titleInput"
-        placeholder="Title"
-        required />
-      <input
-        type="text"
-        class="form-control"
-        id="authorInput"
-        placeholder="Author"
-        required />
-      <button
-        type="submit"
-        id="addBtn"
-        class="btn btn-primary w-25 align-self-end">
-        Add
-      </button>
-    </form> -->*/
+    <hr class="w-25 mx-auto" />*/
