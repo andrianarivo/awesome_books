@@ -1,5 +1,3 @@
-// const titleInput = document.querySelector('#titleInput');
-// const authorInput = document.querySelector('#authorInput');
 let addBtn;
 const mainContainer = document.querySelector('main');
 const navLinks = document.querySelectorAll('.nav-link');
@@ -57,32 +55,41 @@ class BookStore {
 
 const bookStore = new BookStore();
 
-navLinks.forEach((navLink) => {
-  navLink.addEventListener('click', function (e) {
-    mainContainer.innerHTML = '';
-    switch (e.target.id) {
-      case 'list':
-        bookStore.getData();
-        mainContainer.innerHTML = `
+const listOfBooks = () => {
+  bookStore.getData();
+  mainContainer.innerHTML = `
         <div>
             <h1 class="text-center">All Awesome Books</h1>
             <ul class="books w-50 mx-auto list-unstyled my-5 list-group border-3 border-dark"></ul>
         </div>`;
-        booksContainer = document.querySelector('.books');
-        booksContainer.innerHTML = bookStore.render();
+  booksContainer = document.querySelector('.books');
+  booksContainer.innerHTML = bookStore.render();
+};
 
-        // REMOVE A BOOK
-        document.addEventListener('click', (e) => {
-        if (e.target.classList.contains('remove-btn')) {
-            bookStore.remove(e.target.id);
-            bookStore.saveData();
-            booksContainer.innerHTML = bookStore.render();
-            if (bookStore.empty()) {
-            booksContainer.classList.remove('border');
-            }
-        }
-        });
+listOfBooks();
 
+// REMOVE A BOOK
+document.addEventListener('click', (e) => {
+  if (e.target.classList.contains('remove-btn')) {
+    bookStore.remove(e.target.id);
+    bookStore.saveData();
+    booksContainer.innerHTML = bookStore.render();
+    if (bookStore.empty()) {
+      booksContainer.classList.remove('border');
+    }
+  }
+});
+
+navLinks.forEach((navLink) => {
+  navLink.addEventListener('click', function (e) {
+    navLinks.forEach((navLink) => {
+      navLink.classList.remove('text-primary');
+    });
+    e.target.classList.add('text-primary');
+    mainContainer.innerHTML = '';
+    switch (e.target.id) {
+      case 'list':
+        listOfBooks();
         break;
       case 'add-new':
         mainContainer.innerHTML = `
@@ -138,7 +145,7 @@ navLinks.forEach((navLink) => {
           authorInput.value = '';
         });
         break;
-        case 'contact':
+      case 'contact':
         mainContainer.innerHTML = `
         <section class="d-flex flex-column justify-content-center align-items-center">
             <h2 class='text-center'>Contact Information</h2>
@@ -157,5 +164,3 @@ navLinks.forEach((navLink) => {
     }
   });
 });
-
-
