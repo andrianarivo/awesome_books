@@ -25,7 +25,7 @@ class BookStore {
   // Remove book from booksArray
   remove(id) {
     this.booksArray = this.booksArray.filter(
-      (bookItem) => Number(bookItem.id) !== Number(id)
+      (bookItem) => Number(bookItem.id) !== Number(id),
     );
   }
 
@@ -81,7 +81,7 @@ document.addEventListener('click', (e) => {
 });
 
 navLinks.forEach((navLink) => {
-  navLink.addEventListener('click', function (e) {
+  navLink.addEventListener('click', (e) => {
     navLinks.forEach((navLink) => {
       navLink.classList.remove('text-primary');
     });
@@ -121,8 +121,10 @@ navLinks.forEach((navLink) => {
         addBtn = document.querySelector('#addBtn');
         addBtn.addEventListener('click', (e) => {
           e.preventDefault();
-          let titleValue = titleInput.value;
-          let authorValue = authorInput.value;
+          const titleInput = document.querySelector('#titleInput');
+          const authorInput = document.querySelector('#authorInput');
+          const titleValue = titleInput.value;
+          const authorValue = authorInput.value;
           titleInput.className = '';
           authorInput.className = '';
 
@@ -160,6 +162,9 @@ navLinks.forEach((navLink) => {
             </ul>
         </section>
         `;
+        break;
+      default:
+        listOfBooks();
         break;
     }
   });
