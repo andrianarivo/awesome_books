@@ -70,6 +70,19 @@ navLinks.forEach((navLink) => {
         </div>`;
         booksContainer = document.querySelector('.books');
         booksContainer.innerHTML = bookStore.render();
+
+        // REMOVE A BOOK
+        document.addEventListener('click', (e) => {
+        if (e.target.classList.contains('remove-btn')) {
+            bookStore.remove(e.target.id);
+            bookStore.saveData();
+            booksContainer.innerHTML = bookStore.render();
+            if (bookStore.empty()) {
+            booksContainer.classList.remove('border');
+            }
+        }
+        });
+
         break;
       case 'add-new':
         mainContainer.innerHTML = `
@@ -125,20 +138,24 @@ navLinks.forEach((navLink) => {
           authorInput.value = '';
         });
         break;
+        case 'contact':
+        mainContainer.innerHTML = `
+        <section class="d-flex flex-column justify-content-center align-items-center">
+            <h2 class='text-center'>Contact Information</h2>
+            <p>
+                Do you have any questions od you just want to say "Hello"?<br>
+                You can reach out to us!
+            </p>
+            <ul>
+                <li>Our email: mail@mail.com</li>
+                <li>Our phone number: 0042386534422</li>
+                <li>Our address: street name 22, 84503, city, country</li>
+            </ul>
+        </section>
+        `;
+        break;
     }
   });
 });
 
-// REMOVE A BOOK
-// document.addEventListener('click', (e) => {
-//   if (e.target.classList.contains('remove-btn')) {
-//     bookStore.remove(e.target.id);
-//     bookStore.saveData();
-//     booksContainer.innerHTML = bookStore.render();
-//     if (bookStore.empty()) {
-//       booksContainer.classList.remove('border');
-//     }
-//   }
-// });
-/*<!-- Book Collection -->
-    <hr class="w-25 mx-auto" />*/
+
